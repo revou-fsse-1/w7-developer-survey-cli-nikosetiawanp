@@ -1,7 +1,5 @@
 import inquirer from "inquirer";
 
-
-
 const questions = [
 
   // Questions
@@ -35,8 +33,7 @@ const questions = [
     type: "list",
     name: "experience",
     message: "Are you experienced developer?",
-    choices: ["Experienced", "Inexperienced"],
-
+    choices: ["Yes", "No"]
   },
 
   {
@@ -44,12 +41,16 @@ const questions = [
     name: "yearsOfExperience",
     message: "Nice! How many years of experience do you have?",
     choices: ["0-1", "1-3", "3-5", "5-10", "10+"],
+    when(answer) {
+      return answer.experience === "Yes"
+    },
   },
 
   {
     type: "checkbox",
     name: "javascriptLibrary",
     message: "What Javascript library do you know?",
+    isRequired: true,
     choices: ["React", "Vue", "Angular", "NodeJS", "JQuery", "D3.JS"],
   },
 
@@ -61,7 +62,7 @@ const questions = [
       const numberRegex = /^\d+$/;;
 
       if (!numberRegex.test(answer) || !answer || answer <= 0) {
-        return "Input Invalid, your expected salary should be greater than 0"
+        return "Input Invalid, please reenter your expected salary"
       } else if (answer > 10000000) {
         return "Sorry, that is out of our budget!"
       } else {
@@ -87,6 +88,5 @@ inquirer
       console.log(error);
     }
   })
-  
   ;
   
